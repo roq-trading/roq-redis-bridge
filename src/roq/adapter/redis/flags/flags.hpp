@@ -1,0 +1,23 @@
+/* Copyright (c) 2017-2022, Hans Erik Thrane */
+
+#pragma once
+
+#include <string_view>
+
+namespace roq {
+namespace adapter {
+namespace redis {
+namespace flags {
+
+struct Flags final {
+  static std::string_view exchange();
+  static std::string_view symbol();
+  static std::string_view redis_address();
+  static uint16_t redis_port();
+  static uint32_t mbp_depth();
+};
+
+}  // namespace flags
+}  // namespace redis
+}  // namespace adapter
+}  // namespace roq
