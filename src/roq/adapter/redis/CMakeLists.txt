@@ -13,7 +13,7 @@ target_link_libraries(
           "${PROJECT_NAME}-event"
           "${PROJECT_NAME}-hiredis"
           roq-client::roq-client
-          absl::flags
+          absl::flags_parse
           ${HIREDIS_LIBRARIES}
           ${LIBEVENT_LIBRARIES}
           ${UUID_LIBRARIES}
