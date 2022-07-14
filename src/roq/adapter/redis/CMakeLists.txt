@@ -8,16 +8,16 @@ add_executable("${TARGET_NAME}" ${SOURCES})
 
 target_link_libraries(
   "${TARGET_NAME}"
-  "${TARGET_NAME}-flags"
-  "${PROJECT_NAME}-event"
-  "${PROJECT_NAME}-hiredis"
-  roq-client::roq-client
-  roq-logging::roq-logging
-  absl::flags
-  ${HIREDIS_LIBRARIES}
-  ${LIBEVENT_LIBRARIES}
-  ${UUID_LIBRARIES}
-  ${RT_LIBRARIES})
+  PUBLIC roq-api::roq-api roq-logging::roq-logging
+  PRIVATE "${TARGET_NAME}-flags"
+          "${PROJECT_NAME}-event"
+          "${PROJECT_NAME}-hiredis"
+          roq-client::roq-client
+          absl::flags
+          ${HIREDIS_LIBRARIES}
+          ${LIBEVENT_LIBRARIES}
+          ${UUID_LIBRARIES}
+          ${RT_LIBRARIES})
 
 target_compile_features("${TARGET_NAME}" PUBLIC cxx_std_20)
 
