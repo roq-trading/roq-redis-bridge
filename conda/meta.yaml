@@ -23,6 +23,7 @@ requirements:
     - roq-io
     - roq-oss-abseil-cpp
     - roq-oss-catch2
+    - roq-oss-libevent
     - roq-oss-range-v3
     - libhiredis
 

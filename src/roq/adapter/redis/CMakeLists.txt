@@ -17,6 +17,7 @@ target_link_libraries(
           fmt::fmt
           absl::flags
           ${HIREDIS_LIBRARIES}
+          ${LIBEVENT_LIBRARIES}
           ${UUID_LIBRARIES}
           ${RT_LIBRARIES})
 
