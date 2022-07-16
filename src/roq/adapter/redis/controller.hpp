@@ -6,11 +6,11 @@
 
 #include <vector>
 
+#include "roq/io/engine/libevent/context.hpp"
+
 #include "roq/client.hpp"
 
 #include "roq/cache/manager.hpp"
-
-#include "roq/third_party/event/base.hpp"
 
 #include "roq/third_party/hiredis/context.hpp"
 
@@ -58,7 +58,7 @@ class Controller final : public client::Handler, public third_party::hiredis::Co
 
  private:
   client::Dispatcher &dispatcher_;
-  third_party::event::Base base_;
+  std::unique_ptr<io::engine::libevent::Context> libevent_;
   std::unique_ptr<third_party::hiredis::Context> context_;
   bool zombie_ = {};
   std::vector<char> buffer_;

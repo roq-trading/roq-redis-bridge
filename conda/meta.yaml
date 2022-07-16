@@ -20,11 +20,11 @@ requirements:
     - make
   host:
     - roq-client
+    - roq-io
     - roq-oss-abseil-cpp
     - roq-oss-catch2
     - roq-oss-range-v3
     - libhiredis
-    - libevent
 
 about:
   home: https://roq-trading.com

@@ -19,7 +19,7 @@ fi
 
 # launch
 
-$PREFIX ./roq-redis-publisher \
+$PREFIX ./roq-redis-adapter \
   --name trader \
   --exchange deribit \
   --symbol "^BTC-PERP.*$" \

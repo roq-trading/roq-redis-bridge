@@ -18,6 +18,8 @@
 #include "roq/json/top_of_book.hpp"
 #include "roq/json/trade_summary.hpp"
 
+#include "roq/io/engine/libevent/context_factory.hpp"
+
 #include "roq/adapter/redis/key.hpp"
 
 #include "roq/adapter/redis/flags/flags.hpp"
@@ -38,23 +40,24 @@ namespace redis {
 
 namespace {
 auto HEARTBEAT_FREQUENCY = 1s;
-auto create_context(auto &handler, auto &base) {
+auto create_context(auto &handler, auto &libevent) {
   auto result = std::make_unique<third_party::hiredis::Context>(
       handler, flags::Flags::redis_address(), flags::Flags::redis_port());
-  (*result).attach(base);
+  (*result).attach(libevent);
   return result;
 }
 }  // namespace
 
 Controller::Controller(client::Dispatcher &dispatcher)
-    : dispatcher_(dispatcher), bids_(flags::Flags::mbp_depth()), asks_(flags::Flags::mbp_depth()) {
+    : dispatcher_(dispatcher), libevent_(io::engine::libevent::ContextFactory::create()),
+      bids_(flags::Flags::mbp_depth()), asks_(flags::Flags::mbp_depth()) {
 }
 
 void Controller::operator()(Event<Start> const &) {
 }
 
 void Controller::operator()(Event<Stop> const &) {
-  base_.loopexit();
+  (*libevent_).stop();
 }
 
 // note!
@@ -69,7 +72,7 @@ void Controller::operator()(Event<Timer> const &event) {
     send_ping(now);
   }
   // event-loop
-  base_.loop(EVLOOP_NONBLOCK);
+  (*libevent_).drain();
   // disconnect?
   if (zombie_) {
     zombie_ = false;
@@ -146,7 +149,7 @@ void Controller::send(fmt::format_string<Args...> const &fmt, Args &&...args) {
   log::info<3>("{}"sv, message);
   try {
     if (!context_)
-      context_ = create_context(*this, base_);
+      context_ = create_context(*this, *libevent_);
     (*context_).send(message);
   } catch (RuntimeError &e) {
     log::error("ERROR: {}"sv, e.what());

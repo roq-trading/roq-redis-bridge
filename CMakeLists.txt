@@ -31,7 +31,6 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 find_package(absl REQUIRED)
 find_package(fmt REQUIRED)
 find_package(hiredis REQUIRED)
-find_package(Libevent REQUIRED)
 find_package(roq-api REQUIRED)
 find_package(roq-client REQUIRED)
 find_package(roq-io REQUIRED)
@@ -43,7 +42,6 @@ include_directories("${CMAKE_SOURCE_DIR}/src")
 
 # sub-projects
 
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/roq/third_party/event")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/roq/third_party/hiredis")
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/roq/adapter/redis")
 

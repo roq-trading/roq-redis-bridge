@@ -9,15 +9,14 @@ add_executable("${TARGET_NAME}" ${SOURCES})
 target_link_libraries(
   "${TARGET_NAME}"
   PRIVATE "${TARGET_NAME}-flags"
-          "${PROJECT_NAME}-event"
           "${PROJECT_NAME}-hiredis"
           roq-client::roq-client
+          roq-io::roq-io
           roq-logging::roq-logging
           roq-api::roq-api
           fmt::fmt
           absl::flags
           ${HIREDIS_LIBRARIES}
-          ${LIBEVENT_LIBRARIES}
           ${UUID_LIBRARIES}
           ${RT_LIBRARIES})
 
