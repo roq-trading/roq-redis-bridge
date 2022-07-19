@@ -9,7 +9,7 @@
 #include "roq/utils/get.hpp"
 
 namespace roq {
-namespace adapter {
+namespace bridge {
 namespace redis {
 
 // key = <event_type>|<symbol>|<exchange>|<source>
@@ -33,17 +33,17 @@ struct Key final {
 };
 
 }  // namespace redis
-}  // namespace adapter
+}  // namespace bridge
 }  // namespace roq
 
 template <>
-struct fmt::formatter<roq::adapter::redis::Key> {
+struct fmt::formatter<roq::bridge::redis::Key> {
   template <typename Context>
   constexpr auto parse(Context &context) {
     return std::begin(context);
   }
   template <typename Context>
-  auto format(roq::adapter::redis::Key const &value, Context &context) const {
+  auto format(roq::bridge::redis::Key const &value, Context &context) const {
     using namespace std::literals;
     return value.format_to(context);
   }

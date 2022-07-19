@@ -1,6 +1,6 @@
 /* Copyright (c) 2017-2022, Hans Erik Thrane */
 
-#include "roq/adapter/redis/flags/flags.hpp"
+#include "roq/bridge/redis/flags/flags.hpp"
 
 #include <absl/flags/flag.h>
 
@@ -37,7 +37,7 @@ ABSL_FLAG(  //
     "mbp depth");
 
 namespace roq {
-namespace adapter {
+namespace bridge {
 namespace redis {
 namespace flags {
 
@@ -68,5 +68,5 @@ uint32_t Flags::mbp_depth() {
 
 }  // namespace flags
 }  // namespace redis
-}  // namespace adapter
+}  // namespace bridge
 }  // namespace roq

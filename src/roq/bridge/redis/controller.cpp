@@ -1,6 +1,6 @@
 /* Copyright (c) 2017-2022, Hans Erik Thrane */
 
-#include "roq/adapter/redis/controller.hpp"
+#include "roq/bridge/redis/controller.hpp"
 
 #include <memory>
 #include <utility>
@@ -20,14 +20,14 @@
 
 #include "roq/io/engine/libevent/context_factory.hpp"
 
-#include "roq/adapter/redis/key.hpp"
+#include "roq/bridge/redis/key.hpp"
 
-#include "roq/adapter/redis/flags/flags.hpp"
+#include "roq/bridge/redis/flags/flags.hpp"
 
 using namespace std::literals;
 
 namespace roq {
-namespace adapter {
+namespace bridge {
 namespace redis {
 
 // some notes about hiredis:
@@ -172,5 +172,5 @@ cache::Manager &Controller::get_manager(MessageInfo const &message_info) {
 }
 
 }  // namespace redis
-}  // namespace adapter
+}  // namespace bridge
 }  // namespace roq

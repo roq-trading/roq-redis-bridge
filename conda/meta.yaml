@@ -1,5 +1,5 @@
 package:
-  name: roq-redis-adapter
+  name: roq-redis-bridge
   version: {{ GIT_DESCRIBE_TAG }}
 
 source:
@@ -9,7 +9,7 @@ build:
   skip: True  # [win and osx]
   number: {{ GIT_DESCRIBE_NUMBER }}
   run_exports:
-    - {{ pin_subpackage('roq-redis-adapter', max_pin='x.x.x') }}
+    - {{ pin_subpackage('roq-redis-bridge', max_pin='x.x.x') }}
   script_env:                                                                                                              
     - ROQ_BUILD_TYPE
 
@@ -34,4 +34,4 @@ about:
   license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE
-  summary: Roq Redis Adapter
+  summary: Roq Redis Bridge

@@ -1,18 +1,18 @@
 /* Copyright (c) 2017-2022, Hans Erik Thrane */
 
-#include "roq/adapter/redis/application.hpp"
+#include "roq/bridge/redis/application.hpp"
 
 #include <vector>
 
 #include "roq/exceptions.hpp"
 
-#include "roq/adapter/redis/config.hpp"
-#include "roq/adapter/redis/controller.hpp"
+#include "roq/bridge/redis/config.hpp"
+#include "roq/bridge/redis/controller.hpp"
 
 using namespace std::literals;
 
 namespace roq {
-namespace adapter {
+namespace bridge {
 namespace redis {
 
 int Application::main_helper(std::span<std::string_view> const &args) {
@@ -38,5 +38,5 @@ int Application::main(int argc, char **argv) {
 }
 
 }  // namespace redis
-}  // namespace adapter
+}  // namespace bridge
 }  // namespace roq

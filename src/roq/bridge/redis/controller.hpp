@@ -15,7 +15,7 @@
 #include "roq/third_party/hiredis/context.hpp"
 
 namespace roq {
-namespace adapter {
+namespace bridge {
 namespace redis {
 
 // strategy implementation
@@ -68,5 +68,5 @@ class Controller final : public client::Handler, public third_party::hiredis::Co
 };
 
 }  // namespace redis
-}  // namespace adapter
+}  // namespace bridge
 }  // namespace roq

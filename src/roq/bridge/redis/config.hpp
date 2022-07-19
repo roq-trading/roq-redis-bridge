@@ -5,7 +5,7 @@
 #include "roq/client.hpp"
 
 namespace roq {
-namespace adapter {
+namespace bridge {
 namespace redis {
 
 class Config final : public client::Config {
@@ -20,5 +20,5 @@ class Config final : public client::Config {
 };
 
 }  // namespace redis
-}  // namespace adapter
+}  // namespace bridge
 }  // namespace roq

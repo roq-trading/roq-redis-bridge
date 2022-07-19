@@ -1,15 +1,15 @@
 /* Copyright (c) 2017-2022, Hans Erik Thrane */
 
-#include "roq/adapter/redis/application.hpp"
+#include "roq/bridge/redis/application.hpp"
 
 using namespace std::literals;
 
 namespace {
-auto const DESCRIPTION = "Roq Redis Adapter"sv;
+auto const DESCRIPTION = "Roq Redis Bridge"sv;
 }  // namespace
 
 int main(int argc, char **argv) {
-  return roq::adapter::redis::Application(
+  return roq::bridge::redis::Application(
              argc,
              argv,
              {

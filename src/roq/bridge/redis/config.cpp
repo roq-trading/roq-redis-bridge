@@ -1,11 +1,11 @@
 /* Copyright (c) 2017-2022, Hans Erik Thrane */
 
-#include "roq/adapter/redis/config.hpp"
+#include "roq/bridge/redis/config.hpp"
 
-#include "roq/adapter/redis/flags/flags.hpp"
+#include "roq/bridge/redis/flags/flags.hpp"
 
 namespace roq {
-namespace adapter {
+namespace bridge {
 namespace redis {
 
 void Config::dispatch(Handler &handler) const {
@@ -17,5 +17,5 @@ void Config::dispatch(Handler &handler) const {
 }
 
 }  // namespace redis
-}  // namespace adapter
+}  // namespace bridge
 }  // namespace roq

@@ -7,7 +7,7 @@
 #include "roq/service.hpp"
 
 namespace roq {
-namespace adapter {
+namespace bridge {
 namespace redis {
 
 // application
@@ -22,5 +22,5 @@ class Application final : public Service {
 };
 
 }  // namespace redis
-}  // namespace adapter
+}  // namespace bridge
 }  // namespace roq

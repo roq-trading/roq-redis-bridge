@@ -12,7 +12,7 @@ message("Using GIT_REPO_VERSION=${GIT_REPO_VERSION}")
 
 # project
 
-project(roq-redis-adapter VERSION ${GIT_REPO_VERSION})
+project(roq-redis-bridge VERSION ${GIT_REPO_VERSION})
 
 # conda
 
@@ -44,7 +44,7 @@ include_directories("${CMAKE_SOURCE_DIR}/src")
 # sub-projects
 
 add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/roq/third_party/hiredis")
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/roq/adapter/redis")
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/roq/bridge/redis")
 
 # test
 

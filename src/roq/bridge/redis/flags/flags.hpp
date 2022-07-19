@@ -5,7 +5,7 @@
 #include <string_view>
 
 namespace roq {
-namespace adapter {
+namespace bridge {
 namespace redis {
 namespace flags {
 
@@ -19,5 +19,5 @@ struct Flags final {
 
 }  // namespace flags
 }  // namespace redis
-}  // namespace adapter
+}  // namespace bridge
 }  // namespace roq

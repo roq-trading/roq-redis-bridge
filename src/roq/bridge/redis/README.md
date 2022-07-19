@@ -1,6 +1,6 @@
 
 ```
-./roq-redis-adapter \
+./roq-redis-bridge \
   --name trader \
   --exchange deribit \
   --symbol "^BTC-PERP.*$" \
