@@ -21,7 +21,7 @@ requirements:
   host:
     - roq-client
     - roq-io
-    - roq-oss-abseil-cpp
+    - abseil-cpp
     - roq-oss-catch2
     - roq-oss-libevent
     - roq-oss-range-v3
