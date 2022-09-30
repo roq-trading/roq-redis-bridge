@@ -23,7 +23,7 @@ requirements:
     - roq-client
     - roq-io
     - abseil-cpp
-    - roq-oss-catch2
+    - catch2
     - roq-oss-libevent
     - roq-oss-range-v3
     - libhiredis
