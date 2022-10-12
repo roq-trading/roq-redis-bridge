@@ -38,8 +38,15 @@ namespace redis {
 // - the interactions between hiredis and libevent are complex
 // -- this is why we use the zombie flag to delete the context outside the event loop
 
+// === CONSTANTS ===
+
 namespace {
 auto HEARTBEAT_FREQUENCY = 1s;
+}
+
+// === HELPERS ===
+
+namespace {
 auto create_context(auto &handler, auto &libevent) {
   auto result = std::make_unique<third_party::hiredis::Context>(
       handler, flags::Flags::redis_address(), flags::Flags::redis_port());
@@ -47,6 +54,8 @@ auto create_context(auto &handler, auto &libevent) {
   return result;
 }
 }  // namespace
+
+// === IMPLEMENTATION ===
 
 Controller::Controller(client::Dispatcher &dispatcher)
     : dispatcher_(dispatcher), libevent_(io::engine::libevent::ContextFactory::create()),

@@ -4,21 +4,21 @@
 
 using namespace std::literals;
 
+// === CONSTANTS ===
+
 namespace {
-auto const DESCRIPTION = "Roq Redis Bridge"sv;
+roq::Service::Info const INFO{
+    .description = "Roq Redis Bridge"sv,
+    .package_name = ROQ_PACKAGE_NAME,
+    .build_version = ROQ_BUILD_VERSION,
+    .build_number = ROQ_BUILD_NUMBER,
+    .build_type = ROQ_BUILD_TYPE,
+    .git_hash = ROQ_GIT_DESCRIBE_HASH,
+};
 }  // namespace
 
+// === IMPLEMENTATION ===
+
 int main(int argc, char **argv) {
-  return roq::bridge::redis::Application(
-             argc,
-             argv,
-             {
-                 .description = DESCRIPTION,
-                 .package_name = ROQ_PACKAGE_NAME,
-                 .build_version = ROQ_BUILD_VERSION,
-                 .build_number = ROQ_BUILD_NUMBER,
-                 .build_type = ROQ_BUILD_TYPE,
-                 .git_hash = ROQ_GIT_DESCRIBE_HASH,
-             })
-      .run();
+  return roq::bridge::redis::Application{argc, argv, INFO}.run();
 }
