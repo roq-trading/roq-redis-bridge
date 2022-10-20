@@ -14,7 +14,7 @@ if [ "$1" == "debug" ]; then
   esac
   shift 1
 else
-	PREFIX=
+  PREFIX=
 fi
 
 # launch
