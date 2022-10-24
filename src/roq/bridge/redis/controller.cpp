@@ -41,7 +41,7 @@ namespace redis {
 // === CONSTANTS ===
 
 namespace {
-auto HEARTBEAT_FREQUENCY = 1s;
+auto const HEARTBEAT_FREQUENCY = 1s;
 }
 
 // === HELPERS ===
@@ -58,7 +58,7 @@ auto create_context(auto &handler, auto &libevent) {
 // === IMPLEMENTATION ===
 
 Controller::Controller(client::Dispatcher &dispatcher)
-    : dispatcher_(dispatcher), libevent_(io::engine::libevent::ContextFactory::create()),
+    : dispatcher_{dispatcher}, libevent_{io::engine::libevent::ContextFactory::create()},
       bids_(flags::Flags::mbp_depth()), asks_(flags::Flags::mbp_depth()) {
 }
 

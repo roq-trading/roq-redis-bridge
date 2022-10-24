@@ -16,8 +16,8 @@ namespace redis {
 struct Key final {
   template <typename T>
   constexpr Key(roq::Event<T> const &event)
-      : type_(roq::get_name<T>()), source_(event.message_info.source_name),
-        exchange_(roq::utils::get_exchange(event.value)), symbol_(roq::utils::get_symbol(event.value)) {}
+      : type_{roq::get_name<T>()}, source_{event.message_info.source_name},
+        exchange_{roq::utils::get_exchange(event.value)}, symbol_{roq::utils::get_symbol(event.value)} {}
 
   template <typename Context>
   constexpr auto format_to(Context &context) const {
@@ -26,10 +26,10 @@ struct Key final {
   }
 
  private:
-  const std::string_view type_;
-  const std::string_view source_;
-  const std::string_view exchange_;
-  const std::string_view symbol_;
+  std::string_view const type_;
+  std::string_view const source_;
+  std::string_view const exchange_;
+  std::string_view const symbol_;
 };
 
 }  // namespace redis

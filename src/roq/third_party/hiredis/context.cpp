@@ -17,6 +17,8 @@ namespace roq {
 namespace third_party {
 namespace hiredis {
 
+// === HELPERS ===
+
 namespace {
 using value_type = Context::value_type;
 
@@ -56,8 +58,10 @@ void disconnect_callback(const struct redisAsyncContext *context, int status) {
 }
 }  // namespace
 
+// === IMPLEMENTATION ===
+
 Context::Context(Handler &handler, std::string_view const &addr, uint16_t port)
-    : handle_(create<decltype(handle_)>(std::string{addr}, port)), handler_(handler) {
+    : handle_{create<decltype(handle_)>(std::string{addr}, port)}, handler_{handler} {
   (*handle_).data = &handler;
   auto result = redisAsyncSetConnectCallback(handle_.get(), connect_callback);
   if (result != REDIS_OK)

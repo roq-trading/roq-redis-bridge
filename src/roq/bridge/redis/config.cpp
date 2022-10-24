@@ -8,6 +8,8 @@ namespace roq {
 namespace bridge {
 namespace redis {
 
+// === IMPLEMENTATION ===
+
 void Config::dispatch(Handler &handler) const {
   // callback for each subscription pattern
   handler(client::Symbol{
