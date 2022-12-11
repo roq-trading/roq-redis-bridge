@@ -30,12 +30,15 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
 find_package(absl REQUIRED)
 find_package(fmt REQUIRED)
-find_package(hiredis REQUIRED)
-find_package(Libevent REQUIRED)
 find_package(roq-api REQUIRED)
 find_package(roq-client REQUIRED)
 find_package(roq-io REQUIRED)
 find_package(roq-logging REQUIRED)
+
+find_package(PkgConfig REQUIRED)
+
+pkg_check_modules(HIREDIS REQUIRED hiredis)
+pkg_check_modules(LIBEVENT REQUIRED libevent)
 
 # include
 
