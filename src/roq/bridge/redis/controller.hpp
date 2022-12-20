@@ -12,6 +12,8 @@
 
 #include "roq/cache/manager.hpp"
 
+#include "roq/json/context.hpp"
+
 #include "roq/third_party/hiredis/context.hpp"
 
 namespace roq {
@@ -56,6 +58,10 @@ class Controller final : public client::Handler, public third_party::hiredis::Co
 
   cache::Manager &get_manager(MessageInfo const &);
 
+  json::Context const &get_json_context(std::string_view const &exchange, std::string_view const &symbol);
+  json::Context const &update_json_context(
+      std::string_view const &exchange, std::string_view const &symbol, double tick_size, double min_trade_vol);
+
  private:
   client::Dispatcher &dispatcher_;
   std::unique_ptr<io::engine::libevent::Context> libevent_;
@@ -64,6 +70,7 @@ class Controller final : public client::Handler, public third_party::hiredis::Co
   std::vector<char> buffer_;
   std::chrono::nanoseconds next_heartbeat_ = {};
   absl::flat_hash_map<uint8_t, cache::Manager> cache_;
+  absl::flat_hash_map<Exchange, absl::flat_hash_map<Symbol, json::Context>> json_context_;
   std::vector<MBPUpdate> bids_, asks_;
 };
 

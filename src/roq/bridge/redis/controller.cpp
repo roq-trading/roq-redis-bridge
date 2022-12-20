@@ -100,25 +100,33 @@ void Controller::operator()(Event<MarketStatus> const &event) {
 }
 
 void Controller::operator()(Event<ReferenceData> const &event) {
+  auto &reference_data = event.value;
+  auto &context = update_json_context(
+      reference_data.exchange, reference_data.symbol, reference_data.tick_size, reference_data.min_trade_vol);
   if (ready())
-    send("SET {} {}"sv, Key{event}, json::ReferenceData{event});
+    send("SET {} {}"sv, Key{event}, json::ReferenceData{context, event});
 }
 
 void Controller::operator()(Event<TopOfBook> const &event) {
-  if (ready())
-    send("SET {} {}"sv, Key{event}, json::TopOfBook{event});
+  if (ready()) {
+    auto &context = get_json_context(event.value.exchange, event.value.symbol);
+    send("SET {} {}"sv, Key{event}, json::TopOfBook{context, event});
+  }
 }
 
 void Controller::operator()(Event<TradeSummary> const &event) {
-  if (ready())
-    send("SET {} {}"sv, Key{event}, json::TradeSummary{event});
+  if (ready()) {
+    auto &context = get_json_context(event.value.exchange, event.value.symbol);
+    send("SET {} {}"sv, Key{event}, json::TradeSummary{context, event});
+  }
 }
 
 void Controller::operator()(Event<StatisticsUpdate> const &event) {
   if (ready()) {
     get_market(event, [&](auto &market) {
       if (market(event)) {
-        send("SET {} {}"sv, Key{event}, json::StatisticsUpdate{event, market.statistics});
+        auto &context = get_json_context(event.value.exchange, event.value.symbol);
+        send("SET {} {}"sv, Key{event}, json::StatisticsUpdate{context, event, market.statistics});
       }
     });
   }
@@ -128,8 +136,9 @@ void Controller::operator()(Event<MarketByPriceUpdate> const &event) {
   if (ready()) {
     get_market(event, [&](auto &market) {
       if (market(event)) {
+        auto &context = get_json_context(event.value.exchange, event.value.symbol);
         auto [bids, asks] = (*market.market_by_price).extract(bids_, asks_, true);
-        send("SET {} {}"sv, Key{event}, json::MarketByPriceUpdate{event, bids, asks});
+        send("SET {} {}"sv, Key{event}, json::MarketByPriceUpdate{context, event, bids, asks});
       }
     });
   }
@@ -178,6 +187,18 @@ cache::Manager &Controller::get_manager(MessageInfo const &message_info) {
   if (iter == std::end(cache_))
     iter = cache_.emplace(message_info.source, client::MarketByPriceFactory::create).first;
   return (*iter).second;
+}
+
+json::Context const &Controller::get_json_context(std::string_view const &exchange, std::string_view const &symbol) {
+  return json_context_[exchange][symbol];
+}
+
+json::Context const &Controller::update_json_context(
+    std::string_view const &exchange, std::string_view const &symbol, double tick_size, double min_trade_vol) {
+  auto &result = json_context_[exchange][symbol];
+  result.price_decimals = client::Number::increment_to_decimals(tick_size);
+  result.quantity_decimals = client::Number::increment_to_decimals(min_trade_vol);
+  return result;
 }
 
 }  // namespace redis
