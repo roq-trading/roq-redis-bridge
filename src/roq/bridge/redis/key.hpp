@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include <fmt/compile.h>
 #include <fmt/format.h>
 
 #include "roq/api.hpp"
@@ -21,8 +22,8 @@ struct Key final {
 
   template <typename Context>
   constexpr auto format_to(Context &context) const {
-    using namespace std::literals;
-    return fmt::format_to(context.out(), "{}|{}|{}|{}"sv, type_, symbol_, exchange_, source_);
+    using namespace fmt::literals;
+    return fmt::format_to(context.out(), "{}|{}|{}|{}"_cf, type_, symbol_, exchange_, source_);
   }
 
  private:
