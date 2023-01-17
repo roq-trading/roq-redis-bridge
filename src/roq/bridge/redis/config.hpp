@@ -8,8 +8,7 @@ namespace roq {
 namespace bridge {
 namespace redis {
 
-class Config final : public client::Config {
- public:
+struct Config final : public client::Config {
   Config() {}
 
   Config(Config &&) = default;

@@ -22,8 +22,7 @@ namespace redis {
 
 // strategy implementation
 
-class Controller final : public client::Handler, public third_party::hiredis::Context::Handler {
- public:
+struct Controller final : public client::Handler, public third_party::hiredis::Context::Handler {
   explicit Controller(client::Dispatcher &);
 
   Controller(Controller &&) = default;
