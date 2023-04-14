@@ -14,6 +14,10 @@ message("Using GIT_REPO_VERSION=${GIT_REPO_VERSION}")
 
 project(roq-redis-bridge VERSION ${GIT_REPO_VERSION})
 
+# c++
+
+set(CMAKE_CXX_STANDARD 20)
+
 # conda
 
 if(DEFINED ENV{CONDA_PREFIX} AND NOT DEFINED ENV{CONDA_BUILD})
