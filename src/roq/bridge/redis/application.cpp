@@ -8,6 +8,7 @@
 
 #include "roq/bridge/redis/config.hpp"
 #include "roq/bridge/redis/controller.hpp"
+#include "roq/bridge/redis/settings.hpp"
 
 using namespace std::literals;
 
@@ -21,12 +22,13 @@ int Application::main_helper(std::span<std::string_view> const &args) {
   assert(!std::empty(args));
   if (std::size(args) == 1)
     log::fatal("Expected arguments"sv);
-  Config config;
+  Settings settings{client::Type::BRIDGE};
+  Config config{settings};
   // note!
   //   absl::flags will have removed all flags and we're left with arguments
   //   arguments should be a list of unix domain sockets
   auto connections = args.subspan(1);
-  client::Bridge{config, connections}.dispatch<Controller>();
+  client::Bridge{config, connections}.dispatch<Controller>(settings);
   return EXIT_SUCCESS;
 }
 

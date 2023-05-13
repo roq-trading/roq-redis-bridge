@@ -2,19 +2,20 @@
 
 #include "roq/bridge/redis/config.hpp"
 
-#include "roq/bridge/redis/flags/flags.hpp"
-
 namespace roq {
 namespace bridge {
 namespace redis {
 
 // === IMPLEMENTATION ===
 
+Config::Config(Settings const &settings) : settings_{settings} {
+}
+
 void Config::dispatch(Handler &handler) const {
   // callback for each subscription pattern
   handler(client::Symbol{
-      .regex = flags::Flags::symbol(),
-      .exchange = flags::Flags::exchange(),
+      .regex = settings_.symbol,
+      .exchange = settings_.exchange,
   });
 }
 

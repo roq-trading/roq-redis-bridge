@@ -16,6 +16,8 @@
 
 #include "roq/third_party/hiredis/context.hpp"
 
+#include "roq/bridge/redis/settings.hpp"
+
 namespace roq {
 namespace bridge {
 namespace redis {
@@ -23,7 +25,7 @@ namespace redis {
 // strategy implementation
 
 struct Controller final : public client::Handler, public third_party::hiredis::Context::Handler {
-  explicit Controller(client::Dispatcher &);
+  Controller(client::Dispatcher &, Settings const &);
 
   Controller(Controller &&) = default;
   Controller(Controller const &) = delete;
@@ -63,6 +65,7 @@ struct Controller final : public client::Handler, public third_party::hiredis::C
 
  private:
   client::Dispatcher &dispatcher_;
+  Settings const &settings_;
   std::unique_ptr<io::engine::libevent::Context> libevent_;
   std::unique_ptr<third_party::hiredis::Context> context_;
   bool zombie_ = {};

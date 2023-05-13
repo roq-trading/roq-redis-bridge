@@ -22,8 +22,6 @@
 
 #include "roq/bridge/redis/key.hpp"
 
-#include "roq/bridge/redis/flags/flags.hpp"
-
 using namespace std::literals;
 
 namespace roq {
@@ -47,9 +45,8 @@ auto const HEARTBEAT_FREQUENCY = 1s;
 // === HELPERS ===
 
 namespace {
-auto create_context(auto &handler, auto &libevent) {
-  auto result = std::make_unique<third_party::hiredis::Context>(
-      handler, flags::Flags::redis_address(), flags::Flags::redis_port());
+auto create_context(auto &handler, auto &settings, auto &libevent) {
+  auto result = std::make_unique<third_party::hiredis::Context>(handler, settings.redis_address, settings.redis_port);
   (*result).attach(libevent);
   return result;
 }
@@ -57,9 +54,9 @@ auto create_context(auto &handler, auto &libevent) {
 
 // === IMPLEMENTATION ===
 
-Controller::Controller(client::Dispatcher &dispatcher)
-    : dispatcher_{dispatcher}, libevent_{io::engine::libevent::ContextFactory::create()},
-      bids_(flags::Flags::mbp_depth()), asks_(flags::Flags::mbp_depth()) {
+Controller::Controller(client::Dispatcher &dispatcher, Settings const &settings)
+    : dispatcher_{dispatcher}, settings_{settings}, libevent_{io::engine::libevent::ContextFactory::create()},
+      bids_(settings_.mbp_depth), asks_(settings_.mbp_depth) {
 }
 
 void Controller::operator()(Event<Start> const &) {
@@ -145,11 +142,11 @@ void Controller::operator()(Event<MarketByPriceUpdate> const &event) {
 }
 
 void Controller::operator()(third_party::hiredis::Context::Connected const &) {
-  log::info(R"(Connected (host="{}", port={}))"sv, flags::Flags::redis_address(), flags::Flags::redis_port());
+  log::info(R"(Connected (host="{}", port={}))"sv, settings_.redis_address, settings_.redis_port);
 }
 
 void Controller::operator()(third_party::hiredis::Context::Disconnected const &) {
-  log::warn(R"(Disconnected (host="{}", port={}))"sv, flags::Flags::redis_address(), flags::Flags::redis_port());
+  log::warn(R"(Disconnected (host="{}", port={}))"sv, settings_.redis_address, settings_.redis_port);
   zombie_ = true;
 }
 
@@ -167,7 +164,7 @@ void Controller::send(fmt::format_string<Args...> const &fmt, Args &&...args) {
   log::info<3>("{}"sv, message);
   try {
     if (!context_)
-      context_ = create_context(*this, *libevent_);
+      context_ = create_context(*this, settings_, *libevent_);
     (*context_).send(message);
   } catch (RuntimeError &e) {
     log::error("ERROR: {}"sv, e.what());
