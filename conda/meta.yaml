@@ -21,13 +21,14 @@ requirements:
     - make
     - pkg-config
   host:
-    - roq-client
-    - roq-io
     - abseil-cpp
     - catch2  # [linux]
+    - fmt
+    - libhiredis
+    - roq-client
+    - roq-io
     - roq-oss-catch2  # [osx]
     - roq-oss-libevent
-    - libhiredis
 
 about:
   home: https://roq-trading.com
