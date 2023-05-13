@@ -41,7 +41,8 @@ struct fmt::formatter<roq::bridge::redis::Settings> {
         R"(symbol="{}", )"
         R"(redis_address="{}", )"
         R"(redis_port={}, )"
-        R"(mbp_depth={})"
+        R"(mbp_depth={}, )"
+        R"(client={})"
         R"(}})"_cf,
         value.exchange,
         value.symbol,
