@@ -1,4 +1,4 @@
-# roq-redis-adapter
+# roq-redis-bridge
 
 * Connects to one or more gateways.
 * Converts messages to JSON and inserts these in a Redis memory database.
@@ -34,9 +34,9 @@ conda install -y \
 conda install -y --channel https://roq-trading.com/conda/stable \
     roq-client
 
-git clone https://github.com/roq-trading/roq-redis-adapter
+git clone https://github.com/roq-trading/roq-redis-bridge
 
-cd roq-redis-adapter
+cd roq-redis-bridge
 
 git submodule update --init --recursive
 
@@ -61,13 +61,13 @@ bash Miniforge3-Linux-x86_64.sh -b -p opt/conda
 source opt/conda/bin/activate
 
 conda install -y --channel https://roq-trading.com/conda/stable \
-    roq-redis-adapter
+    roq-redis-bridge
 ```
 
 ### Docker
 
 ```bash
-podman pull docker.io/roqtrading/roq-redis-adapter
+podman pull docker.io/roqtrading/roq-redis-bridge
 ```
 
 
@@ -76,7 +76,7 @@ podman pull docker.io/roqtrading/roq-redis-adapter
 ### Conda
 
 ```bash
-roq-redis-adapter \
+roq-redis-bridge \
     --name trader \
     --exchange deribit \
     --symbol "^BTC-PERP.*$" \
@@ -88,7 +88,7 @@ roq-redis-adapter \
 ### Docker
 
 ```bash
-podman exec -it docker.io/roqtrading/roq-redis-adapter \
+podman exec -it docker.io/roqtrading/roq-redis-bridge \
     --name trader \
     --exchange deribit \
     --symbol "^BTC-PERP.*$" \
