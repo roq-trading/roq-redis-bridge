@@ -11,6 +11,7 @@ target_link_libraries(
   PRIVATE "${TARGET_NAME}-flags"
           "${PROJECT_NAME}-hiredis"
           roq-client::roq-client
+          roq-client::roq-client-flags
           roq-io::roq-io
           roq-logging::roq-logging
           roq-api::roq-api
