@@ -18,27 +18,14 @@ namespace redis {
 
 // === IMPLEMENTATION ===
 
-int Application::main_helper(std::span<std::string_view> const &args) {
-  assert(!std::empty(args));
-  if (std::size(args) == 1)
+int Application::main(args::Parser const &args) {
+  auto params = args.params();
+  if (std::empty(params))
     log::fatal("Expected arguments"sv);
-  Settings settings{client::Type::BRIDGE};
+  Settings settings{args};
   Config config{settings};
-  // note!
-  //   absl::flags will have removed all flags and we're left with arguments
-  //   arguments should be a list of unix domain sockets
-  auto connections = args.subspan(1);
-  client::Bridge{config, connections}.dispatch<Controller>(settings);
+  client::Bridge{settings, config, params}.dispatch<Controller>(settings);
   return EXIT_SUCCESS;
-}
-
-int Application::main(int argc, char **argv) {
-  // wrap arguments (prefer to not work with raw pointers)
-  std::vector<std::string_view> args;
-  args.reserve(argc);
-  for (int i = 0; i < argc; ++i)
-    args.emplace_back(argv[i]);
-  return main_helper(args);
 }
 
 }  // namespace redis

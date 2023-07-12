@@ -26,6 +26,7 @@ requirements:
     - fmt
     - libhiredis
     - roq-client
+    - roq-flags
     - roq-io
     - roq-oss-catch2  # [osx]
     - roq-oss-libevent

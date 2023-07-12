@@ -16,8 +16,7 @@ struct Application final : public Service {
   using Service::Service;
 
  protected:
-  int main_helper(std::span<std::string_view> const &args);
-  int main(int argc, char **argv) override;
+  int main(args::Parser const &) override;
 };
 
 }  // namespace redis

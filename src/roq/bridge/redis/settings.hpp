@@ -5,14 +5,16 @@
 #include <fmt/compile.h>
 #include <fmt/format.h>
 
-#include "roq/client.hpp"
+#include "roq/args/parser.hpp"
+
+#include "roq/client/flags/settings.hpp"
 
 namespace roq {
 namespace bridge {
 namespace redis {
 
-struct Settings final : public client::Settings2 {
-  explicit Settings(client::Type);
+struct Settings final : public client::flags::Settings {
+  explicit Settings(args::Parser const &);
 
   std::string_view exchange;
   std::string_view symbol;
