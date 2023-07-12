@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 # cmake
 
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 # version (using git tag)
 
@@ -47,12 +47,12 @@ pkg_check_modules(LIBEVENT REQUIRED libevent)
 
 # include
 
-include_directories("${CMAKE_SOURCE_DIR}/src")
+include_directories(${CMAKE_SOURCE_DIR}/src)
 
 # sub-projects
 
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/roq/third_party/hiredis")
-add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/src/roq/bridge/redis")
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/roq/third_party/hiredis)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/roq/bridge/redis)
 
 # test
 
@@ -61,4 +61,4 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
 endif()
 
 find_package(Catch2 REQUIRED)
-add_subdirectory("${CMAKE_SOURCE_DIR}/test")
+add_subdirectory(${CMAKE_SOURCE_DIR}/test)
