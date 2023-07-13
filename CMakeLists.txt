@@ -16,7 +16,9 @@ project(roq-redis-bridge VERSION ${GIT_REPO_VERSION})
 
 # c++
 
-set(CMAKE_CXX_STANDARD 20)
+if(NOT DEFINED CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 20)
+endif()
 
 # conda
 
