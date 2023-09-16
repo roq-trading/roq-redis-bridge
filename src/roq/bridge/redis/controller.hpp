@@ -64,7 +64,6 @@ struct Controller final : public client::Handler, public third_party::hiredis::C
       std::string_view const &exchange, std::string_view const &symbol, double tick_size, double min_trade_vol);
 
  private:
-  client::Dispatcher &dispatcher_;
   Settings const &settings_;
   std::unique_ptr<io::engine::libevent::Context> libevent_;
   std::unique_ptr<third_party::hiredis::Context> context_;

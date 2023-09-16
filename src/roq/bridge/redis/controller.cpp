@@ -54,9 +54,9 @@ auto create_context(auto &handler, auto &settings, auto &libevent) {
 
 // === IMPLEMENTATION ===
 
-Controller::Controller(client::Dispatcher &dispatcher, Settings const &settings)
-    : dispatcher_{dispatcher}, settings_{settings}, libevent_{io::engine::libevent::ContextFactory::create()},
-      bids_(settings_.mbp_depth), asks_(settings_.mbp_depth) {
+Controller::Controller(client::Dispatcher &, Settings const &settings)
+    : settings_{settings}, libevent_{io::engine::libevent::ContextFactory::create()}, bids_(settings_.mbp_depth),
+      asks_(settings_.mbp_depth) {
 }
 
 void Controller::operator()(Event<Start> const &) {
