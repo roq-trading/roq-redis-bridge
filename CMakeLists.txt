@@ -47,6 +47,14 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(HIREDIS REQUIRED hiredis)
 pkg_check_modules(LIBEVENT REQUIRED libevent)
 
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+  include(CTest)
+endif()
+
+if(BUILD_TESTING)
+  find_package(Catch2 REQUIRED)
+endif()
+
 # include
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
@@ -55,12 +63,3 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/roq/third_party/hiredis)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/src/roq/bridge/redis)
-
-# test
-
-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-  include(CTest)
-endif()
-
-find_package(Catch2 REQUIRED)
-add_subdirectory(${CMAKE_SOURCE_DIR}/test)

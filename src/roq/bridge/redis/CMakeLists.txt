@@ -1,3 +1,7 @@
+if(BUILD_TESTING)
+  add_subdirectory(test)
+endif()
+
 set(TARGET_NAME ${PROJECT_NAME})
 
 add_subdirectory(flags)
