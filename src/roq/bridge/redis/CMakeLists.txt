@@ -23,8 +23,6 @@ target_link_libraries(
           roq-api::roq-api
           fmt::fmt
           ${HIREDIS_LIBRARIES}
-          ${LIBEVENT_LIBRARIES}
-          ${UUID_LIBRARIES}
           ${RT_LIBRARIES})
 
 if(ROQ_BUILD_TYPE STREQUAL "Release")
