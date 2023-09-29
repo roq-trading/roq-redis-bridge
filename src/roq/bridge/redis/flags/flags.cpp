@@ -42,27 +42,27 @@ namespace redis {
 namespace flags {
 
 std::string_view Flags::exchange() {
-  static const std::string result = absl::GetFlag(FLAGS_exchange);
+  static std::string const result = absl::GetFlag(FLAGS_exchange);
   return result;
 }
 
 std::string_view Flags::symbol() {
-  static const std::string result = absl::GetFlag(FLAGS_symbol);
+  static std::string const result = absl::GetFlag(FLAGS_symbol);
   return result;
 }
 
 std::string_view Flags::redis_address() {
-  static const std::string result = absl::GetFlag(FLAGS_redis_address);
+  static std::string const result = absl::GetFlag(FLAGS_redis_address);
   return result;
 }
 
 uint16_t Flags::redis_port() {
-  static const uint16_t result = absl::GetFlag(FLAGS_redis_port);
+  static uint16_t const result = absl::GetFlag(FLAGS_redis_port);
   return result;
 }
 
 uint32_t Flags::mbp_depth() {
-  static const uint32_t result = absl::GetFlag(FLAGS_mbp_depth);
+  static uint32_t const result = absl::GetFlag(FLAGS_mbp_depth);
   return result;
 }
 
