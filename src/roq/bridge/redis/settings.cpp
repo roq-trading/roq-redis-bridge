@@ -18,7 +18,7 @@ Settings::Settings(args::Parser const &args)
     : client::flags::Settings{args}, exchange{flags::Flags::exchange()}, symbol{flags::Flags::symbol()},
       redis_address{flags::Flags::redis_address()}, redis_port{flags::Flags::redis_port()},
       mbp_depth{flags::Flags::mbp_depth()} {
-  // log::debug("settings={}"sv, *this);
+  // log::info("settings={}"sv, *this);
 }
 
 }  // namespace redis
