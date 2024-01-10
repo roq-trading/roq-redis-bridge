@@ -20,10 +20,9 @@ struct Key final {
       : type_{roq::get_name<T>()}, source_{event.message_info.source_name},
         exchange_{roq::utils::get_exchange(event.value)}, symbol_{roq::utils::get_symbol(event.value)} {}
 
-  template <typename Context>
-  constexpr auto format_to(Context &context) const {
-    using namespace fmt::literals;
-    return fmt::format_to(context.out(), "{}|{}|{}|{}"_cf, type_, symbol_, exchange_, source_);
+  constexpr auto format_to(auto &context) const {
+    using namespace std::literals;
+    return fmt::format_to(context.out(), "{}|{}|{}|{}"sv, type_, symbol_, exchange_, source_);
   }
 
  private:
@@ -39,12 +38,8 @@ struct Key final {
 
 template <>
 struct fmt::formatter<roq::bridge::redis::Key> {
-  template <typename Context>
-  constexpr auto parse(Context &context) {
-    return std::begin(context);
-  }
-  template <typename Context>
-  auto format(roq::bridge::redis::Key const &value, Context &context) const {
+  constexpr auto parse(format_parse_context &context) { return std::begin(context); }
+  auto format(roq::bridge::redis::Key const &value, format_context &context) const {
     using namespace std::literals;
     return value.format_to(context);
   }

@@ -29,13 +29,9 @@ struct Settings final : public client::flags::Settings {
 
 template <>
 struct fmt::formatter<roq::bridge::redis::Settings> {
-  template <typename Context>
-  constexpr auto parse(Context &context) {
-    return std::begin(context);
-  }
-  template <typename Context>
-  auto format(roq::bridge::redis::Settings const &value, Context &context) const {
-    using namespace fmt::literals;
+  constexpr auto parse(format_parse_context &context) { return std::begin(context); }
+  auto format(roq::bridge::redis::Settings const &value, format_context &context) const {
+    using namespace std::literals;
     return fmt::format_to(
         context.out(),
         R"({{)"
@@ -45,7 +41,7 @@ struct fmt::formatter<roq::bridge::redis::Settings> {
         R"(redis_port={}, )"
         R"(mbp_depth={}, )"
         R"(client={})"
-        R"(}})"_cf,
+        R"(}})"sv,
         value.exchange,
         value.symbol,
         value.redis_address,
