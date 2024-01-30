@@ -25,13 +25,12 @@ requirements:
     - pkg-config
   host:
     - abseil-cpp
-    - catch2  # [linux]
+    - catch2
     - fmt
     - libhiredis
     - roq-client
     - roq-flags
     - roq-io
-    - roq-oss-catch2  # [osx]
     - roq-oss-libevent
 
 about:
