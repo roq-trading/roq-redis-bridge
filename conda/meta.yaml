@@ -31,7 +31,6 @@ requirements:
     - roq-client
     - roq-flags
     - roq-io
-    - roq-oss-libevent
 
 about:
   home: https://roq-trading.com

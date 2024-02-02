@@ -35,7 +35,6 @@ find_package(roq-logging REQUIRED)
 find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(HIREDIS REQUIRED hiredis)
-pkg_check_modules(LIBEVENT REQUIRED libevent)
 
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   include(CTest)
