@@ -18,6 +18,8 @@
 #include "roq/json/top_of_book.hpp"
 #include "roq/json/trade_summary.hpp"
 
+#include "roq/market/utils.hpp"
+
 #include "roq/io/engine/libevent/context_factory.hpp"
 
 #include "roq/bridge/redis/key.hpp"
@@ -193,8 +195,8 @@ json::Context const &Controller::get_json_context(std::string_view const &exchan
 json::Context const &Controller::update_json_context(
     std::string_view const &exchange, std::string_view const &symbol, double tick_size, double min_trade_vol) {
   auto &result = json_context_[exchange][symbol];
-  result.price_decimals = client::Number::increment_to_decimals(tick_size);
-  result.quantity_decimals = client::Number::increment_to_decimals(min_trade_vol);
+  result.price_decimals = market::increment_to_precision(tick_size);
+  result.quantity_decimals = market::increment_to_precision(min_trade_vol);
   return result;
 }
 

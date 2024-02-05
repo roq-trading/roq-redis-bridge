@@ -31,6 +31,7 @@ requirements:
     - roq-client
     - roq-flags
     - roq-io
+    - roq-market
 
 about:
   home: https://roq-trading.com
