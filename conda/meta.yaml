@@ -28,6 +28,7 @@ requirements:
     - catch2
     - fmt
     - libhiredis
+    - roq-cache
     - roq-client
     - roq-flags
     - roq-io
