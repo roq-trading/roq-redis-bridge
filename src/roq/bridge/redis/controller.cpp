@@ -9,14 +9,14 @@
 
 #include "roq/utils/get.hpp"
 
-#include "roq/json/gateway_status.hpp"
-#include "roq/json/market_by_price_update.hpp"
-#include "roq/json/market_status.hpp"
-#include "roq/json/reference_data.hpp"
-#include "roq/json/statistics.hpp"
-#include "roq/json/statistics_update.hpp"
-#include "roq/json/top_of_book.hpp"
-#include "roq/json/trade_summary.hpp"
+#include "roq/utils/json/gateway_status.hpp"
+#include "roq/utils/json/market_by_price_update.hpp"
+#include "roq/utils/json/market_status.hpp"
+#include "roq/utils/json/reference_data.hpp"
+#include "roq/utils/json/statistics.hpp"
+#include "roq/utils/json/statistics_update.hpp"
+#include "roq/utils/json/top_of_book.hpp"
+#include "roq/utils/json/trade_summary.hpp"
 
 #include "roq/market/utils.hpp"
 
@@ -90,12 +90,12 @@ void Controller::operator()(Event<Timer> const &event) {
 
 void Controller::operator()(Event<GatewayStatus> const &event) {
   if (ready())
-    send("SET {} {}"sv, Key{event}, json::GatewayStatus{event});
+    send("SET {} {}"sv, Key{event}, utils::json::GatewayStatus{event});
 }
 
 void Controller::operator()(Event<MarketStatus> const &event) {
   if (ready())
-    send("SET {} {}"sv, Key{event}, json::MarketStatus{event});
+    send("SET {} {}"sv, Key{event}, utils::json::MarketStatus{event});
 }
 
 void Controller::operator()(Event<ReferenceData> const &event) {
@@ -103,20 +103,20 @@ void Controller::operator()(Event<ReferenceData> const &event) {
   auto &context = update_json_context(
       reference_data.exchange, reference_data.symbol, reference_data.tick_size, reference_data.min_trade_vol);
   if (ready())
-    send("SET {} {}"sv, Key{event}, json::ReferenceData{context, event});
+    send("SET {} {}"sv, Key{event}, utils::json::ReferenceData{context, event});
 }
 
 void Controller::operator()(Event<TopOfBook> const &event) {
   if (ready()) {
     auto &context = get_json_context(event.value.exchange, event.value.symbol);
-    send("SET {} {}"sv, Key{event}, json::TopOfBook{context, event});
+    send("SET {} {}"sv, Key{event}, utils::json::TopOfBook{context, event});
   }
 }
 
 void Controller::operator()(Event<TradeSummary> const &event) {
   if (ready()) {
     auto &context = get_json_context(event.value.exchange, event.value.symbol);
-    send("SET {} {}"sv, Key{event}, json::TradeSummary{context, event});
+    send("SET {} {}"sv, Key{event}, utils::json::TradeSummary{context, event});
   }
 }
 
@@ -125,7 +125,7 @@ void Controller::operator()(Event<StatisticsUpdate> const &event) {
     get_market(event, [&](auto &market) {
       if (market(event)) {
         auto &context = get_json_context(event.value.exchange, event.value.symbol);
-        send("SET {} {}"sv, Key{event}, json::StatisticsUpdate{context, event, market.statistics});
+        send("SET {} {}"sv, Key{event}, utils::json::StatisticsUpdate{context, event, market.statistics});
       }
     });
   }
@@ -137,7 +137,7 @@ void Controller::operator()(Event<MarketByPriceUpdate> const &event) {
       if (market(event)) {
         auto &context = get_json_context(event.value.exchange, event.value.symbol);
         auto [bids, asks] = (*market.market_by_price).extract(bids_, asks_, true);
-        send("SET {} {}"sv, Key{event}, json::MarketByPriceUpdate{context, event, bids, asks});
+        send("SET {} {}"sv, Key{event}, utils::json::MarketByPriceUpdate{context, event, bids, asks});
       }
     });
   }
@@ -188,11 +188,12 @@ cache::Manager &Controller::get_manager(MessageInfo const &message_info) {
   return (*iter).second;
 }
 
-json::Context const &Controller::get_json_context(std::string_view const &exchange, std::string_view const &symbol) {
+utils::json::Context const &Controller::get_json_context(
+    std::string_view const &exchange, std::string_view const &symbol) {
   return json_context_[exchange][symbol];
 }
 
-json::Context const &Controller::update_json_context(
+utils::json::Context const &Controller::update_json_context(
     std::string_view const &exchange, std::string_view const &symbol, double tick_size, double min_trade_vol) {
   auto &result = json_context_[exchange][symbol];
   result.price_decimals = market::increment_to_precision(tick_size);

@@ -10,9 +10,9 @@
 
 #include "roq/client.hpp"
 
-#include "roq/cache/manager.hpp"
+#include "roq/utils::json/context.hpp"
 
-#include "roq/json/context.hpp"
+#include "roq/cache/manager.hpp"
 
 #include "roq/third_party/hiredis/context.hpp"
 
@@ -59,8 +59,8 @@ struct Controller final : public client::Handler, public third_party::hiredis::C
 
   cache::Manager &get_manager(MessageInfo const &);
 
-  json::Context const &get_json_context(std::string_view const &exchange, std::string_view const &symbol);
-  json::Context const &update_json_context(
+  utils::json::Context const &get_json_context(std::string_view const &exchange, std::string_view const &symbol);
+  utils::json::Context const &update_json_context(
       std::string_view const &exchange, std::string_view const &symbol, double tick_size, double min_trade_vol);
 
  private:
@@ -71,7 +71,7 @@ struct Controller final : public client::Handler, public third_party::hiredis::C
   std::vector<char> buffer_;
   std::chrono::nanoseconds next_heartbeat_ = {};
   absl::flat_hash_map<uint8_t, cache::Manager> cache_;
-  absl::flat_hash_map<Exchange, absl::flat_hash_map<Symbol, json::Context>> json_context_;
+  absl::flat_hash_map<Exchange, absl::flat_hash_map<Symbol, utils::json::Context>> json_context_;
   std::vector<MBPUpdate> bids_, asks_;
 };
 
