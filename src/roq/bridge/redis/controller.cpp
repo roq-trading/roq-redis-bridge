@@ -183,8 +183,11 @@ void Controller::get_market(Event<T> const &event, Callback callback) {
 
 cache::Manager &Controller::get_manager(MessageInfo const &message_info) {
   auto iter = cache_.find(message_info.source);
-  if (iter == std::end(cache_))
-    iter = cache_.emplace(message_info.source, client::MarketByPriceFactory::create).first;
+  if (iter == std::end(cache_)) {
+    auto res = cache_.try_emplace(message_info.source, client::MarketByPriceFactory::create);
+    assert(res.second);
+    iter = res.first;
+  }
   return (*iter).second;
 }
 

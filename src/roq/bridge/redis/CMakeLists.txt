@@ -24,6 +24,7 @@ target_link_libraries(
           roq-flags::roq-flags
           roq-api::roq-api
           fmt::fmt
+          unordered_dense::unordered_dense
           ${HIREDIS_LIBRARIES}
           ${RT_LIBRARIES})
 

@@ -33,6 +33,7 @@ find_package(roq-flags REQUIRED)
 find_package(roq-io REQUIRED)
 find_package(roq-logging REQUIRED)
 find_package(roq-market REQUIRED)
+find_package(unordered_dense REQUIRED)
 
 find_package(PkgConfig REQUIRED)
 

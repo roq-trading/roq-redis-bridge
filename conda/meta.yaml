@@ -33,6 +33,7 @@ requirements:
     - roq-flags
     - roq-io
     - roq-market
+    - roq-oss-unordered_dense
 
 about:
   home: https://roq-trading.com

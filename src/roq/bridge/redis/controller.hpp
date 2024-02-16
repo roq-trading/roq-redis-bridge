@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include <absl/container/flat_hash_map.h>
-
 #include <vector>
+
+#include "roq/utils/container.hpp"
 
 #include "roq/io/engine/libevent/context.hpp"
 
@@ -70,8 +70,8 @@ struct Controller final : public client::Handler, public third_party::hiredis::C
   bool zombie_ = {};
   std::vector<char> buffer_;
   std::chrono::nanoseconds next_heartbeat_ = {};
-  absl::flat_hash_map<uint8_t, cache::Manager> cache_;
-  absl::flat_hash_map<Exchange, absl::flat_hash_map<Symbol, utils::json::Context>> json_context_;
+  utils::unordered_map<uint8_t, cache::Manager> cache_;
+  utils::unordered_map<std::string, utils::unordered_map<std::string, utils::json::Context>> json_context_;
   std::vector<MBPUpdate> bids_, asks_;
 };
 
