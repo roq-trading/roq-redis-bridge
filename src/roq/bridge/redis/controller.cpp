@@ -199,8 +199,8 @@ utils::json::Context const &Controller::get_json_context(
 utils::json::Context const &Controller::update_json_context(
     std::string_view const &exchange, std::string_view const &symbol, double tick_size, double min_trade_vol) {
   auto &result = json_context_[exchange][symbol];
-  result.price_decimals = market::increment_to_precision(tick_size);
-  result.quantity_decimals = market::increment_to_precision(min_trade_vol);
+  result.price_precision = market::increment_to_precision(tick_size);
+  result.quantity_precision = market::increment_to_precision(min_trade_vol);
   return result;
 }
 
